@@ -1,3 +1,8 @@
+# Requisitos
+- Opencart 1.5.x / 2.0.x a 2.2.x / 2.3.x / 3.x
+- Vqmod instalado caso use versão Opencart 1.5.x
+- Conta vendedor ativada junto a PagHiper - https://paghiper.com
+
 # Guia de instalação Módulo Boleto PagHiper Opencart
 
 1 - Baixe os arquivos dos módulos para seu PC e escolha a versão qual deseja instalar de acordo a versão da Opencart, lembrando que a versão deve ser uma compativel, não existe retrocompatibilidade entre algumas versões de módulos Opencart.
@@ -10,5 +15,12 @@
 
 3 - Após acessado e enviado os arquivos do módulo corretamente a diretorio principal de sua loja acesse o painel administrativo de sua loja, geralmente o caminho é http://www.sualoja.com.br/admin/ e o login e senha já previamente cadastrado.
 
+<i>Ps: Caso o admin de sua loja seja renomeado os arquivos de admin original do módulo devem ser enviados para pasta qual corresponde ser o admin em sua loja.</i>
+
 ![Admin](https://i.imgur.com/eidEAe2.png)
 
+4 - Após acessar o Admin de sua loja vá até o menu <b>Extensões > Modificações</b> e no canto superior direito clique no botão para recarregar modificações, este processo é somente para Opencart 2.x a 3.x, para Opencart 1.5.x pule a próxima etapa.
+
+![Recarregar modificações](https://i.imgur.com/Ljt73lX.png)
+
+5 -
