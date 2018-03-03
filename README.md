@@ -31,7 +31,7 @@
 
 <i>Ps: Os campos customizados vai de acordo a loja do cliente, configurados somente se a mesma possuir.</i>
 
-![Configuração](https://i.imgur.com/S7bVFo8.png)
+![Configuração](https://i.imgur.com/oOq3qLx.png)
 
 7 - Configurado o módudo corretamente de acordo com os dados de sua conta salve as configurações, feito isso é só testar em caso de erros os logs do mesmo ficam salvos no Admin de sua loja em <b>Configurações > Ferramentas > Logs de erro</b> com o motivo do mesmo, lembrando que o módulo é API, portanto sua loja deverá manter a base de dados do cliente cadastrado corretamente.
 
