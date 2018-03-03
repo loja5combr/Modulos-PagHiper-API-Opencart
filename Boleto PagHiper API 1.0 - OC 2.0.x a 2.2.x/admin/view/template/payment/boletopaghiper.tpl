@@ -69,7 +69,7 @@
 		  <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-payable">Prazo de Validade (dias)</label>
             <div class="col-sm-10">
-              <input type="text" name="boletopaghiper_validade" value="<?php echo $boletopaghiper_validade; ?>" placeholder="API Token PagHiper" id="input-payable" class="form-control" />
+              <input type="text" name="boletopaghiper_validade" value="<?php echo $boletopaghiper_validade; ?>" placeholder="Prazo em dias" id="input-payable" class="form-control" />
               <?php if ($error_validade) { ?>
               <div class="text-danger"><?php echo $error_validade; ?></div>
               <?php } ?>
