@@ -36,3 +36,15 @@
 7 - Configurado o módudo corretamente de acordo com os dados de sua conta salve as configurações, feito isso é só testar em caso de erros os logs do mesmo ficam salvos no Admin de sua loja em <b>Configurações > Ferramentas > Logs de erro</b> com o motivo do mesmo, lembrando que o módulo é API, portanto sua loja deverá manter a base de dados do cliente cadastrado corretamente.
 
 8 - O retorno de dados é feito automaticamente quando um boleto é pago/cancelado, portanto não precisa configurar nenhuma url junto ao sistema da PagHiper, o módulo já faz o processo automaticamente.
+
+# Aplicando Descontos para Boleto PagHiper
+
+1 - Baixe o módulo de descontos por forma de pagamento em Opencart.com, para isso [Clique Aqui](https://www.opencart.com/index.php?route=marketplace/extension/info&extension_id=21685&filter_search=desconto&filter_license=0) e acesse diretamente o link do módulo e baixe o mesmo para seu PC.
+
+2 - Acesse o Admin de sua loja e no menu <b>Extensões > Instalador</b> escolha o módulo ocmod qual baixou e aguarde o processo de instalação do mesmo.
+
+3 - Após instalado acesse <b>Extensões > Modificações</b> e clique no botão atualizar (do opencart não do navegador)
+
+4 - Depois ainda em extensções acesse o menu <b>Totais / Total do Pedido</b> localize e instale o módulo <b>Desconto a vista</b>, edite e informe a % de desconto qual deseja aplicar e o metodo qual deseja aplicar informe: <b>boletopaghiper</b>
+
+5 - Pronto é só salvar as configurações
