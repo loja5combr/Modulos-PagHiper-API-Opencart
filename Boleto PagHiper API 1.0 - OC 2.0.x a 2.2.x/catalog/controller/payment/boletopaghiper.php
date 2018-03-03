@@ -63,12 +63,18 @@ class ControllerPaymentBoletoPagHiper extends Controller {
 	
 	public function ipn(){
         $this->load->model('checkout/order');
-        if(isset($_POST['idTransacao']) && $_POST['apiKey']==trim($this->config->get('boletopaghiper_api_key'))){
+		$transacao = '';
+		if(isset($_POST['transaction_id'])){
+			$transacao = $_POST['transaction_id'];
+		}elseif(isset($_POST['idTransacao'])){
+			$transacao = $_POST['idTransacao'];
+		}
+        if(!empty($transacao) && $_POST['apiKey']==trim($this->config->get('boletopaghiper_api_key'))){
 			
 			$json = array();
 			$json['token'] = trim($this->config->get('boletopaghiper_api_token'));
 			$json['apiKey'] = trim($this->config->get('boletopaghiper_api_key'));
-			$json['transaction_id'] = trim($_POST['idTransacao']);
+			$json['transaction_id'] = trim($transacao);
 			$ch = curl_init();
 			curl_setopt($ch, CURLOPT_URL, 'https://api.paghiper.com/transaction/status/');
 			curl_setopt($ch, CURLOPT_POST, true);
