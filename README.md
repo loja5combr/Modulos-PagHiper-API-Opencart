@@ -21,6 +21,10 @@
 
 4 - Após acessar o Admin de sua loja vá até o menu <b>Extensões > Modificações</b> e no canto superior direito clique no botão para recarregar modificações, este processo é somente para Opencart 2.x a 3.x, para Opencart 1.5.x pule a próxima etapa.
 
+<i>Ps: Recomendamos sempre antes fazer o backup caso sua loja possua algum customização especifica.</i>
+
 ![Recarregar modificações](https://i.imgur.com/Ljt73lX.png)
 
-5 -
+5 - Ainda no painel administrativo de sua loja acesse o menu <b>Extensções > Pagamento</b> localize e instale o módulo <b>Boleto PagHiper</b>, caso o mesmo não exiba na lista verifique se os passos anteriores foram feitos corretamente, principalmente a parte de envio dos arquivos ao servidor.
+
+6 - Após instalado corretamente, clique em Editar a configuração do mesmo, vai exibir a tela de configuração onde vai pedir as suas credenciais junto a PagHiper, acesse sua conta PagHiper no menu [<b>Minha Conta > Credenciais</b>](https://www.paghiper.com/painel/credenciais/) ira obter os dados qual ira configurar no módulo em sua loja.
