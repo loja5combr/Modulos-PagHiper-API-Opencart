@@ -11,7 +11,7 @@
 
 <i>Ps: Lembrando que os dados de acesso FTP a sua loja são fornecidos por sua hospedagem, muitos casos os dados são os mesmos de Cpanel.</i>
 
-![Barra de Acesso](http://s.glbimg.com/po/tt/f/original/2012/09/26/filezilla01.png)
+![Barra de Acesso](https://i.imgur.com/gVooTdD.png)
 
 3 - Após acessado e enviado os arquivos do módulo corretamente a diretorio principal de sua loja acesse o painel administrativo de sua loja, geralmente o caminho é http://www.sualoja.com.br/admin/ e o login e senha já previamente cadastrado.
 
