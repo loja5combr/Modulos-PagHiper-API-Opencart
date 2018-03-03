@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+<id>Boleto PagHiper</id>
+<version>1.0</version>
+<vqmver>2.6.0</vqmver>
+<author>Bruno - suportedaloja@gmail.com</author>
+
+<file name="catalog/view/theme/*/template/common/success.tpl">
+<operation error="log">
+<search position="replace"><![CDATA[<?php echo $text_message; ?>]]></search>
+<add><![CDATA[
+<?php if(isset($boleto_paghiper)){ ?>
+<p>
+A transa&ccedil;&atilde;o <b><?php echo $transacao;?></b> relacionada ao seu pedido <b>#<?php echo $dados_boleto['order_id'];?></b> encontra-se no status <b>Aguardando Pagamento</b>. 
+<br><br>
+<b>Total a pagar:</b> <?php echo number_format(($dados_boleto['value_cents']/100), 2, '.', '');?><br>
+<b>Forma de Pagamento:</b> Boleto Banc&aacute;rio<br>
+<b>Validade:</b> <?php echo date('d/m/Y',strtotime($dados_boleto['due_date']));?><br>
+
+<?php if(isset($dados_boleto['bank_slip']['digitable_line'])){ ?>
+<b>Linha Digit&aacute;vel:</b> <?php echo $dados_boleto['bank_slip']['digitable_line'];?><br>
+<?php } ?>
+
+<br>
+<a href="<?php echo $dados_boleto['bank_slip']['url_slip_pdf'];?>" target="_blank" class="button btn btn-success"><span class="glyphicon glyphicon-barcode" aria-hidden="true"></span> Visualizar boleto de pagamento</a>
+<br><p>Pague o boleto para que seu pedido possa ser confirmado e enviado ao seu endere&ccedil;o de entrega.</p><br>
+Clique <a href="index.php?route=account/order/info&order_id=<?php echo $dados_boleto['order_id'];?>">aqui</a> para visualizar detalhes de seu pedido ou para mais informa&ccedil;&otilde;es entre em <a href="index.php?route=information/contact">contato</a> com a loja.
+</p>
+<?php }else{ ?>
+<?php echo $text_message; ?>
+<?php } ?>
+]]></add>
+</operation>
+</file>
+
+<file name="catalog/controller/checkout/success.php">
+<operation error="log">
+<search position="after"><![CDATA[$this->language->load('checkout/success');]]></search>
+<add><![CDATA[
+if(isset($_GET['boleto']) && $_GET['boleto']=='paghiper' && sha1($_GET['id'])==$_GET['hash']){
+	$json = array();
+	$json['token'] = trim($this->config->get('boletopaghiper_api_token'));
+	$json['apiKey'] = trim($this->config->get('boletopaghiper_api_key'));
+	$json['transaction_id'] = trim($_GET['id']);
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, 'https://api.paghiper.com/transaction/status/');
+	curl_setopt($ch, CURLOPT_POST, true);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);  
+	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+	curl_setopt($ch, CURLOPT_HEADER, false);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($json));
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+		'Accept: application/json',
+		'Content-Type: application/json'
+	));
+	$response = curl_exec($ch);
+	$retorno = @json_decode($response,true);
+	curl_close($ch);
+	if(isset($retorno['status_request']['result']) && $retorno['status_request']['result']=='success'){
+		$this->data['boleto_paghiper'] = true;
+		$this->data['transacao'] = $_GET['id'];
+		$this->data['dados_boleto'] = $retorno['status_request'];
+	}
+}
+]]></add>
+</operation>
+</file>
+
+</modification>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+<name>Boleto PagHiper</name>
+<version>1.0</version>
+<author>Bruno Alencar - suportedaloja@gmail.com</author>
+<code>boleto-paghiper</code>
+<description></description>
+
+<file path="catalog/controller/checkout/success.php">
+<operation>
+<notes></notes>
+<search index="" regex="false" trim="false"><![CDATA[$this->load->language('checkout/success');]]></search>
+<add offset="0" trim="false" position="after"><![CDATA[
+if(isset($_GET['boleto']) && $_GET['boleto']=='paghiper' && sha1($_GET['id'])==$_GET['hash']){
+	$json = array();
+	$json['token'] = trim($this->config->get('payment_boletopaghiper_api_token'));
+	$json['apiKey'] = trim($this->config->get('payment_boletopaghiper_api_key'));
+	$json['transaction_id'] = trim($_GET['id']);
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, 'https://api.paghiper.com/transaction/status/');
+	curl_setopt($ch, CURLOPT_POST, true);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);  
+	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+	curl_setopt($ch, CURLOPT_HEADER, false);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($json));
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+		'Accept: application/json',
+		'Content-Type: application/json'
+	));
+	$response = curl_exec($ch);
+	$retorno = @json_decode($response,true);
+	curl_close($ch);
+	if(isset($retorno['status_request']['result']) && $retorno['status_request']['result']=='success'){
+		$data['boleto_paghiper'] = true;
+		$data['transacao'] = $_GET['id'];
+		$data['dados_boleto'] = $retorno['status_request'];
+	}
+}
+]]></add>
+</operation>
+</file>
+
+<file path="catalog/view/theme/*/template/common/success.twig">
+<operation>
+<notes></notes>
+<search index="" regex="false" trim="false"><![CDATA[{{ text_message }}]]></search>
+<add offset="0" trim="false" position="replace"><![CDATA[
+{% if boleto_paghiper %}
+	<p>
+	A transa&ccedil;&atilde;o <b>{{ transacao }}</b> relacionada ao seu pedido <b>#{{ dados_boleto['order_id'] }}</b> encontra-se no status <b>Aguardando Pagamento</b>. 
+	<br><br>
+	<b>Total a pagar:</b> {{ (dados_boleto['value_cents']/100)|number_format(2, '.', '') }}<br>
+	<b>Forma de Pagamento:</b> Boleto Banc&aacute;rio<br>
+	<b>Validade:</b> {{ dados_boleto['due_date']|date('d/m/Y') }}<br>
+
+	{% if dados_boleto['bank_slip']['digitable_line'] %}
+	<b>Linha Digit&aacute;vel:</b> {{ dados_boleto['bank_slip']['digitable_line'] }}<br>
+	{% endif %}
+
+	<br>
+	<a href="{{ dados_boleto['bank_slip']['url_slip_pdf'] }}" target="_blank" class="button btn btn-success"><span class="glyphicon glyphicon-barcode" aria-hidden="true"></span> Visualizar boleto de pagamento</a>
+	<br><p>Pague o boleto para que seu pedido possa ser confirmado e enviado ao seu endere&ccedil;o de entrega.</p><br>
+	Clique <a href="index.php?route=account/order/info&order_id={{ dados_boleto['order_id'] }}">aqui</a> para visualizar detalhes de seu pedido ou para mais informa&ccedil;&otilde;es entre em <a href="index.php?route=information/contact">contato</a> com a loja.
+	</p>
+{% else %}
+	{{ text_message }}
+{% endif %}
+]]></add>
+</operation>
+</file>
+
+</modification>
