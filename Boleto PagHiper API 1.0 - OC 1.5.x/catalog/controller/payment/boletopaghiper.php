@@ -60,19 +60,21 @@ class ControllerPaymentBoletoPagHiper extends Controller {
 	public function ipn(){
         $this->load->model('checkout/order');
 		$transacao = '';
+		$id_notificacao = '';
 		if(isset($_POST['transaction_id'])){
 			$transacao = $_POST['transaction_id'];
-		}elseif(isset($_POST['idTransacao'])){
-			$transacao = $_POST['idTransacao'];
+		}elseif(isset($_POST['notification_id'])){
+			$id_notificacao = $_POST['notification_id'];
 		}
-        if(!empty($transacao) && $_POST['apiKey']==trim($this->config->get('boletopaghiper_api_key'))){
+        if(!empty($transacao)  && !empty($id_notificacao) && $_POST['apiKey']==trim($this->config->get('boletopaghiper_api_key'))){
 			
 			$json = array();
 			$json['token'] = trim($this->config->get('boletopaghiper_api_token'));
 			$json['apiKey'] = trim($this->config->get('boletopaghiper_api_key'));
 			$json['transaction_id'] = trim($transacao);
+			$json['notification_id'] = trim($id_notificacao);
 			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_URL, 'https://api.paghiper.com/transaction/status/');
+			curl_setopt($ch, CURLOPT_URL, 'https://api.paghiper.com/transaction/notification/');
 			curl_setopt($ch, CURLOPT_POST, true);
 			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);  
 			curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
