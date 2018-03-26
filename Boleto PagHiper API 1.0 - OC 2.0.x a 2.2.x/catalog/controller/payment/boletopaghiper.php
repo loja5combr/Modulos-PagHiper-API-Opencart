@@ -123,6 +123,7 @@ class ControllerPaymentBoletoPagHiper extends Controller {
         $json = array();
 		$json['apiKey'] = trim($this->config->get('boletopaghiper_api_key'));
 		$json['order_id'] = $this->session->data['order_id'];
+		$json['partners_id'] = 'GYNBX5XE';
 		$json['payer_email'] = $pedidos['email'];
 		$json['payer_name'] = $pedidos['payment_firstname'].' '.$pedidos['payment_lastname'];
 		$json['payer_cpf_cnpj'] = $fiscal;
