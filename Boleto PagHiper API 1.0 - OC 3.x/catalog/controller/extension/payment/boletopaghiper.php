@@ -63,7 +63,8 @@ class ControllerExtensionPaymentBoletoPagHiper extends Controller {
 		$id_notificacao = '';
 		if(isset($_POST['transaction_id'])){
 			$transacao = $_POST['transaction_id'];
-		}elseif(isset($_POST['notification_id'])){
+		}
+		if(isset($_POST['notification_id'])){
 			$id_notificacao = $_POST['notification_id'];
 		}
         if(!empty($transacao)  && !empty($id_notificacao) && $_POST['apiKey']==trim($this->config->get('payment_boletopaghiper_api_key'))){
