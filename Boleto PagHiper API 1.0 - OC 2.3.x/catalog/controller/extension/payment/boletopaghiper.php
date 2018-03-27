@@ -93,11 +93,11 @@ class ControllerExtensionPaymentBoletoPagHiper extends Controller {
 				$pedidos = $this->model_checkout_order->getOrder((int)$retorno['status_request']['order_id']);
 				if($retorno['status_request']['status']=='paid'){
 					if($pedidos['order_status_id']!=$this->config->get('boletopaghiper_order_status_pago')){
-						$this->model_checkout_order->update((int)$retorno['status_request']['order_id'],$this->config->get('boletopaghiper_order_status_pago'),'',true);
+						$this->model_checkout_order->addOrderHistory((int)$retorno['status_request']['order_id'],$this->config->get('boletopaghiper_order_status_pago'),'',true);
 					}
 				}elseif($retorno['status_request']['status']=='canceled'){
 					if($pedidos['order_status_id']!=$this->config->get('boletopaghiper_order_status_cancelado')){
-						$this->model_checkout_order->update((int)$retorno['status_request']['order_id'],$this->config->get('boletopaghiper_order_status_cancelado'),'',true);
+						$this->model_checkout_order->addOrderHistory((int)$retorno['status_request']['order_id'],$this->config->get('boletopaghiper_order_status_cancelado'),'',true);
 					}
 				}
 			}
