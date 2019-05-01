@@ -49,7 +49,7 @@ class ControllerExtensionPaymentBoletoPagHiper extends Controller {
 	}
 	
 	public function getTaxas(){
-		$query = $this->db->query("SELECT SUM(value) AS taxa FROM " . DB_PREFIX . "order_total WHERE order_id = '" . (int)$this->session->data['order_id'] . "' AND code = 'tax'");
+		$query = $this->db->query("SELECT SUM(value) AS taxa FROM " . DB_PREFIX . "order_total WHERE value > 0 AND order_id = '" . (int)$this->session->data['order_id'] . "' AND (code = 'handling' || code = 'tax')");
 		if(isset($query->row['taxa'])){
             return abs($query->row['taxa']);
 		}else{
