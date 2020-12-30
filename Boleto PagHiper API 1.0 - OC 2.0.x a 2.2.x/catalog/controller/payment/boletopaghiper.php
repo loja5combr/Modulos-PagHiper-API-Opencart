@@ -11,6 +11,12 @@ class ControllerPaymentBoletoPagHiper extends Controller {
 	
 	public function index() {
 		$this->language->load('payment/boletopaghiper');
+		$this->load->model('checkout/order');
+		//bloqueia o acesso 
+		if(!isset($this->session->data['order_id'])){
+			die('Ops, pedido n&atilde;o encontrado!');
+		}
+		
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
         $data['id_pedido'] = $this->session->data['order_id'];
 		$data['hash'] = md5(sha1($data['id_pedido']));
